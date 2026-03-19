@@ -1,185 +1,206 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { BookOpen, Users, Award, Video, CheckCircle, TrendingUp } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Navbar } from '@/components/navbar'
+import { BookOpen, Users, Award, TrendingUp, Video, FileText, MessageSquare } from 'lucide-react'
 
 export default function HomePage() {
-  const features = [
-    {
-      icon: BookOpen,
-      title: 'Manajemen Kursus',
-      description: 'Buat dan kelola kursus dengan struktur bab dan materi yang terorganisir'
-    },
-    {
-      icon: CheckCircle,
-      title: 'Kuis & Ujian',
-      description: 'Sistem kuis online dengan penilaian otomatis dan timer'
-    },
-    {
-      icon: Award,
-      title: 'Sertifikat Digital',
-      description: 'Generate sertifikat otomatis setelah menyelesaikan kursus'
-    },
-    {
-      icon: Video,
-      title: 'Live Class',
-      description: 'Video conference terintegrasi untuk pembelajaran sinkron'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Progress Tracking',
-      description: 'Monitor kemajuan belajar dan kehadiran mahasiswa'
-    },
-    {
-      icon: Users,
-      title: 'Multi-role',
-      description: 'Sistem role untuk student, instructor, dan admin'
-    },
-  ]
-
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen bg-surface-1">
+      <Navbar />
+      
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 bg-gradient-to-b from-primary/5 to-background">
+      <section className="relative bg-gradient-to-b from-surface-1 to-brand-50/20 pt-24 pb-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6">
-              Platform Pembelajaran
-              <span className="text-primary"> Digital Modern</span>
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <Badge variant="brand" className="mb-4">
+              Platform Pembelajaran Kampus
+            </Badge>
+            
+            <h1 className="text-5xl font-serif text-ink-900 leading-tight">
+              Belajar Lebih Mudah, Kapan Saja, Di Mana Saja
             </h1>
-            <p className="text-xl text-muted-foreground mb-8">
-              Sistem manajemen pembelajaran yang powerful dan mudah digunakan untuk institusi pendidikan
+            
+            <p className="text-lg text-ink-600 leading-relaxed">
+              Sistem manajemen pembelajaran modern untuk mahasiswa dan dosen. 
+              Akses materi kuliah, kerjakan tugas, dan ikuti kelas online dalam satu platform.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
-                <Link href="/courses">
-                  Jelajahi Kursus
-                </Link>
+            
+            <div className="flex items-center justify-center gap-4 pt-4">
+              <Button variant="primary" size="lg" asChild>
+                <Link href="/register">Daftar Gratis</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/register">
-                  Mulai Belajar Gratis
-                </Link>
+              <Button variant="ghost" size="lg" asChild>
+                <Link href="/courses">Jelajahi Kursus</Link>
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 border-y bg-muted/50">
+      {/* Stats Bar */}
+      <section className="border-y border-border bg-surface-0 py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">100+</div>
-              <div className="text-sm text-muted-foreground">Kursus Tersedia</div>
+              <div className="text-4xl font-serif text-brand-500 mb-2">1,200+</div>
+              <div className="text-sm text-ink-600">Mahasiswa Aktif</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">5,000+</div>
-              <div className="text-sm text-muted-foreground">Mahasiswa Aktif</div>
+              <div className="text-4xl font-serif text-brand-500 mb-2">50+</div>
+              <div className="text-sm text-ink-600">Kursus Tersedia</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">50+</div>
-              <div className="text-sm text-muted-foreground">Instruktur</div>
+              <div className="text-4xl font-serif text-brand-500 mb-2">30+</div>
+              <div className="text-sm text-ink-600">Dosen Berpengalaman</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">95%</div>
-              <div className="text-sm text-muted-foreground">Tingkat Kepuasan</div>
+              <div className="text-4xl font-serif text-brand-500 mb-2">95%</div>
+              <div className="text-sm text-ink-600">Tingkat Kepuasan</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20">
+      <section className="py-16 bg-surface-1">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Fitur Unggulan</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Semua yang Anda butuhkan untuk pembelajaran online yang efektif
+            <h2 className="text-4xl font-serif text-ink-900 mb-4">
+              Fitur Unggulan
+            </h2>
+            <p className="text-ink-600 max-w-2xl mx-auto">
+              Platform lengkap dengan berbagai fitur untuk mendukung pembelajaran online yang efektif
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                      <feature.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <CardTitle className="text-lg">{feature.title}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-surface-0 rounded-xl p-6 border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-lg bg-brand-50 flex items-center justify-center mb-4">
+                <Video className="w-6 h-6 text-brand-500" />
+              </div>
+              <h3 className="text-lg font-semibold text-ink-900 mb-2">
+                Video Pembelajaran
+              </h3>
+              <p className="text-sm text-ink-600">
+                Akses video materi kuliah berkualitas tinggi dengan subtitle dan kontrol kecepatan
+              </p>
+            </div>
+
+            <div className="bg-surface-0 rounded-xl p-6 border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-lg bg-brand-50 flex items-center justify-center mb-4">
+                <FileText className="w-6 h-6 text-brand-500" />
+              </div>
+              <h3 className="text-lg font-semibold text-ink-900 mb-2">
+                Kuis & Tugas
+              </h3>
+              <p className="text-sm text-ink-600">
+                Kerjakan kuis dan tugas online dengan sistem penilaian otomatis
+              </p>
+            </div>
+
+            <div className="bg-surface-0 rounded-xl p-6 border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-lg bg-brand-50 flex items-center justify-center mb-4">
+                <Users className="w-6 h-6 text-brand-500" />
+              </div>
+              <h3 className="text-lg font-semibold text-ink-900 mb-2">
+                Live Class
+              </h3>
+              <p className="text-sm text-ink-600">
+                Ikuti kelas online secara real-time dengan fitur video conference
+              </p>
+            </div>
+
+            <div className="bg-surface-0 rounded-xl p-6 border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-lg bg-brand-50 flex items-center justify-center mb-4">
+                <MessageSquare className="w-6 h-6 text-brand-500" />
+              </div>
+              <h3 className="text-lg font-semibold text-ink-900 mb-2">
+                Forum Diskusi
+              </h3>
+              <p className="text-sm text-ink-600">
+                Berdiskusi dengan dosen dan teman sekelas dalam forum kursus
+              </p>
+            </div>
+
+            <div className="bg-surface-0 rounded-xl p-6 border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-lg bg-brand-50 flex items-center justify-center mb-4">
+                <Award className="w-6 h-6 text-brand-500" />
+              </div>
+              <h3 className="text-lg font-semibold text-ink-900 mb-2">
+                Sertifikat Digital
+              </h3>
+              <p className="text-sm text-ink-600">
+                Dapatkan sertifikat digital setelah menyelesaikan kursus
+              </p>
+            </div>
+
+            <div className="bg-surface-0 rounded-xl p-6 border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-lg bg-brand-50 flex items-center justify-center mb-4">
+                <TrendingUp className="w-6 h-6 text-brand-500" />
+              </div>
+              <h3 className="text-lg font-semibold text-ink-900 mb-2">
+                Progress Tracking
+              </h3>
+              <p className="text-sm text-ink-600">
+                Pantau progress belajar dengan dashboard yang informatif
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-16 bg-brand-50">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            Siap Memulai Perjalanan Belajar Anda?
+          <h2 className="text-4xl font-serif text-ink-900 mb-4">
+            Siap Memulai Perjalanan Belajar?
           </h2>
-          <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Bergabunglah dengan ribuan mahasiswa yang sudah belajar di platform kami
+          <p className="text-ink-600 mb-8 max-w-2xl mx-auto">
+            Bergabunglah dengan ribuan mahasiswa yang sudah merasakan kemudahan belajar online
           </p>
-          <Button size="lg" variant="secondary" asChild>
-            <Link href="/register">
-              Daftar Sekarang - Gratis!
-            </Link>
+          <Button variant="primary" size="lg" asChild>
+            <Link href="/register">Daftar Sekarang</Link>
           </Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-12 bg-muted/50">
+      <footer className="bg-surface-0 border-t border-border py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                  <BookOpen className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <span className="font-bold">LMS Kampus</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Platform pembelajaran digital untuk institusi pendidikan modern
+              <h3 className="text-xl font-serif text-brand-500 mb-4">LMS Kampus</h3>
+              <p className="text-sm text-ink-600">
+                Platform pembelajaran online untuk kampus modern
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Platform</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/courses" className="hover:text-primary">Kursus</Link></li>
-                <li><Link href="/about" className="hover:text-primary">Tentang</Link></li>
-                <li><Link href="/contact" className="hover:text-primary">Kontak</Link></li>
+              <h4 className="font-semibold text-ink-900 mb-4">Platform</h4>
+              <ul className="space-y-2 text-sm text-ink-600">
+                <li><Link href="/courses" className="hover:text-brand-500">Kursus</Link></li>
+                <li><Link href="/instructors" className="hover:text-brand-500">Instruktur</Link></li>
+                <li><Link href="/about" className="hover:text-brand-500">Tentang</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Bantuan</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/faq" className="hover:text-primary">FAQ</Link></li>
-                <li><Link href="/support" className="hover:text-primary">Support</Link></li>
-                <li><Link href="/docs" className="hover:text-primary">Dokumentasi</Link></li>
+              <h4 className="font-semibold text-ink-900 mb-4">Bantuan</h4>
+              <ul className="space-y-2 text-sm text-ink-600">
+                <li><Link href="/help" className="hover:text-brand-500">Pusat Bantuan</Link></li>
+                <li><Link href="/faq" className="hover:text-brand-500">FAQ</Link></li>
+                <li><Link href="/contact" className="hover:text-brand-500">Kontak</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/privacy" className="hover:text-primary">Privacy</Link></li>
-                <li><Link href="/terms" className="hover:text-primary">Terms</Link></li>
+              <h4 className="font-semibold text-ink-900 mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm text-ink-600">
+                <li><Link href="/privacy" className="hover:text-brand-500">Privasi</Link></li>
+                <li><Link href="/terms" className="hover:text-brand-500">Syarat & Ketentuan</Link></li>
               </ul>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-            <p>&copy; 2026 LMS Kampus. All rights reserved.</p>
+          <div className="border-t border-border mt-8 pt-8 text-center text-sm text-ink-600">
+            © 2026 LMS Kampus. All rights reserved.
           </div>
         </div>
       </footer>

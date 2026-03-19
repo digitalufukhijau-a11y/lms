@@ -10,51 +10,84 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: '1.5rem',
       screens: {
-        '2xl': '1400px',
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
       },
     },
     extend: {
       colors: {
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
+        brand: {
+          50: 'rgb(var(--brand-50) / <alpha-value>)',
+          500: 'rgb(var(--brand-500) / <alpha-value>)',
+          700: 'rgb(var(--brand-700) / <alpha-value>)',
         },
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
+          500: 'rgb(var(--accent-500) / <alpha-value>)',
         },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
+        ink: {
+          900: 'rgb(var(--ink-900) / <alpha-value>)',
+          600: 'rgb(var(--ink-600) / <alpha-value>)',
+          400: 'rgb(var(--ink-400) / <alpha-value>)',
         },
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+        surface: {
+          0: 'rgb(var(--surface-0) / <alpha-value>)',
+          1: 'rgb(var(--surface-1) / <alpha-value>)',
+          2: 'rgb(var(--surface-2) / <alpha-value>)',
+        },
+        border: 'rgb(var(--border) / <alpha-value>)',
+        danger: {
+          500: 'rgb(var(--danger-500) / <alpha-value>)',
+        },
+        warn: {
+          500: 'rgb(var(--warn-500) / <alpha-value>)',
+        },
+        success: {
+          500: 'rgb(var(--success-500) / <alpha-value>)',
         },
       },
+      fontFamily: {
+        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-dm-serif)', 'Georgia', 'serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      fontSize: {
+        xs: ['0.6875rem', { lineHeight: '1.4' }],
+        sm: ['0.8125rem', { lineHeight: '1.5' }],
+        base: ['1rem', { lineHeight: '1.7' }],
+        lg: ['1.125rem', { lineHeight: '1.4' }],
+        xl: ['1.25rem', { lineHeight: '1.3' }],
+        '2xl': ['1.5rem', { lineHeight: '1.3' }],
+        '4xl': ['2rem', { lineHeight: '1.25' }],
+        '5xl': ['2.625rem', { lineHeight: '1.15' }],
+      },
+      spacing: {
+        1: '0.25rem',
+        2: '0.5rem',
+        3: '0.75rem',
+        4: '1rem',
+        5: '1.25rem',
+        6: '1.5rem',
+        8: '2rem',
+        12: '3rem',
+        16: '4rem',
+      },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        sm: '0.25rem',
+        DEFAULT: '0.5rem',
+        lg: '0.5rem',
+        xl: '0.75rem',
+        '2xl': '1rem',
+        full: '9999px',
+      },
+      boxShadow: {
+        sm: '0 1px 3px rgba(0,0,0,.06)',
+        md: '0 4px 12px rgba(0,0,0,.08)',
+        lg: '0 8px 24px rgba(0,0,0,.12)',
+        '2xl': '0 20px 60px rgba(0,0,0,.18)',
       },
     },
   },

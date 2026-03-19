@@ -1,256 +1,203 @@
-# LMS Kampus - Learning Management System
+# 🎓 LMS Kampus
 
-<div align="center">
+Modern Learning Management System untuk institusi pendidikan, dibangun dengan Next.js 14 dan Supabase.
 
-![LMS Kampus](https://img.shields.io/badge/LMS-Kampus-blue)
-![Next.js](https://img.shields.io/badge/Next.js-14-black)
-![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-green)
-![License](https://img.shields.io/badge/license-MIT-blue)
+## ✨ Features
 
-**Sistem Manajemen Pembelajaran Modern - Powered by Supabase**
+- 🔐 Authentication & Role-based Access (Student, Instructor, Admin)
+- 📚 Course Management dengan chapters & lessons
+- 📝 Quiz & Assessment system
+- 📊 Progress Tracking
+- 🎥 Video Lessons (ready for integration)
+- 📱 Responsive Design (Mobile-first)
+- 🌙 Dark Mode Support
+- 🎨 Modern UI dengan Design System lengkap
 
-[Demo](https://lms-kampus.vercel.app) · [Dokumentasi](./SETUP.md) · [Report Bug](https://github.com/yourusername/lms-kampus/issues)
-
-</div>
-
----
-
-## 📚 Tentang Project
-
-LMS Kampus adalah platform pembelajaran digital yang dibangun dengan arsitektur modern **Supabase-first**. Dirancang untuk institusi kampus dan sekolah dengan fokus pada kesederhanaan, skalabilitas, dan efisiensi biaya.
-
-### ✨ Fitur Utama
-
-- 🎓 **Manajemen Kursus** - Struktur hierarki (Course → Chapter → Lesson)
-- 📹 **Multi-format Content** - Video, PDF, Text, Quiz
-- ✅ **Quiz & Ujian Online** - Auto-grading, timer, anti-cheating
-- 📊 **Progress Tracking** - Real-time monitoring kemajuan belajar
-- 🎥 **Live Class** - Video conference terintegrasi (LiveKit)
-- 📜 **Sertifikat Digital** - Auto-generate PDF setelah lulus
-- 🔔 **Notifikasi Real-time** - Supabase Realtime WebSocket
-- 👥 **Multi-role** - Student, Instructor, Admin dengan RLS
-- 📱 **Responsive** - Mobile-first design
-- 🔒 **Secure** - Row Level Security (RLS) built-in
-
-## 🚀 Tech Stack (Ultra Simple!)
-
-```
-Next.js 14 (Vercel)
-└── Supabase (All-in-one)
-    ├── PostgreSQL + PgBouncer
-    ├── Auth (JWT + OAuth)
-    ├── Realtime (WebSocket)
-    └── Storage (Files)
-
-Optional:
-├── Cloudflare Stream (video)
-├── LiveKit Cloud (live class)
-└── Resend (email)
-```
-
-### Kenapa Supabase-First?
-
-✅ **4 services** instead of 8  
-✅ **Satu dashboard** untuk semua  
-✅ **Built-in security** dengan RLS  
-✅ **Auto-scaling** PgBouncer included  
-✅ **Real-time gratis** WebSocket built-in  
-✅ **50% lebih murah** dari arsitektur sebelumnya  
-
-## 🎯 Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
-
 - Node.js 18+
-- Supabase account (gratis di [supabase.com](https://supabase.com))
+- Supabase account (free tier)
 
-### 5-Minute Setup
+### Setup (10 menit)
 
+1. **Clone & Install**
 ```bash
-# 1. Clone & install
-git clone https://github.com/yourusername/lms-kampus.git
+git clone <repo-url>
 cd lms-kampus/frontend
 npm install
+```
 
-# 2. Setup environment
-cp .env.example .env.local
+2. **Setup Supabase**
+- Buat project di [supabase.com](https://supabase.com)
+- Copy Project URL & anon key
+
+3. **Configure Environment**
+```bash
+cp .env.local.template .env.local
 # Edit .env.local dengan Supabase credentials
+```
 
-# 3. Setup database
+4. **Push Database**
+```bash
 npm install -g supabase
 supabase login
-supabase link --project-ref your-ref-id
 cd ..
+supabase link --project-ref YOUR_PROJECT_REF
 supabase db push
+```
 
-# 4. Run!
+5. **Run Development Server**
+```bash
 cd frontend
 npm run dev
 ```
 
 Buka http://localhost:3000
 
-📖 **Detailed Guide:** [QUICKSTART.md](./frontend/QUICKSTART.md) | [READY_TO_RUN.md](./READY_TO_RUN.md)
+📖 **Panduan lengkap:** [QUICK_START_UI.md](./QUICK_START_UI.md)
 
 ## 📁 Project Structure
 
 ```
 lms-kampus/
-├── frontend/              # Next.js 14 Application
-│   ├── app/
-│   │   ├── (auth)/       # Login, Register
-│   │   ├── (student)/    # Student Dashboard
-│   │   ├── (instructor)/ # Instructor Dashboard
-│   │   ├── (admin)/      # Admin Panel
-│   │   └── api/          # API Routes
-│   ├── components/       # Reusable Components
+├── frontend/                    # Next.js Application
+│   ├── app/                     # App Router pages
+│   │   ├── (auth)/             # Login & Register
+│   │   ├── (student)/          # Student Dashboard
+│   │   ├── (instructor)/       # Instructor Dashboard
+│   │   ├── courses/            # Course pages
+│   │   └── page.js             # Landing page
+│   ├── components/
+│   │   ├── ui/                 # Base UI components
+│   │   ├── navbar.jsx          # Main navigation
+│   │   └── course-card.jsx     # Course card
 │   ├── lib/
-│   │   ├── supabase/     # Supabase clients
-│   │   └── utils.js      # Utilities
-│   └── middleware.js     # Auth middleware
+│   │   └── supabase/           # Supabase clients
+│   └── middleware.js           # Auth middleware
 │
 ├── supabase/
-│   └── migrations/       # Database migrations
+│   └── migrations/             # Database schema
 │
-└── docs/                 # Documentation
+└── docs/                       # Documentation
 ```
 
-## 🗄️ Database Schema
+## 🎨 Design System
 
-Database menggunakan PostgreSQL dengan Row Level Security (RLS).
+Project ini menggunakan design system lengkap berdasarkan blueprint UI:
 
-**Main Tables:**
-- `profiles` - User profiles (extends auth.users)
-- `courses` - Course information
-- `chapters` - Course chapters
-- `lessons` - Lesson content
-- `enrollments` - Student enrollments
-- `lesson_progress` - Progress tracking
-- `quizzes` - Quiz definitions
-- `quiz_attempts` - Student attempts
-- `certificates` - Generated certificates
-- `live_sessions` - Live class sessions
-- `notifications` - Real-time notifications
+- **Colors**: Brand (hijau), Accent (ungu), Semantic colors
+- **Typography**: DM Sans (body) + DM Serif Display (headings)
+- **Components**: Button, Card, Badge, Input, dll
+- **Dark Mode**: Full support dengan smooth transitions
+- **Responsive**: Mobile-first dengan breakpoints konsisten
 
-Lihat [migrations](./supabase/migrations/) untuk schema lengkap.
+📖 **Detail:** [IMPLEMENTATION_BLUEPRINT.md](./IMPLEMENTATION_BLUEPRINT.md)
 
-## 🔐 Authentication & Security
+## 🛠️ Tech Stack
 
-### Supabase Auth
-- Email/Password authentication
-- OAuth providers (Google, GitHub, etc)
-- JWT tokens (automatic refresh)
-- Email verification
-- Password reset
+### Frontend
+- **Framework**: Next.js 14 (App Router)
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui + Radix UI
+- **Icons**: Lucide React
+- **State**: Zustand + React Query
+- **Forms**: React Hook Form + Zod
 
-### Row Level Security (RLS)
-Semua tabel dilindungi dengan RLS policies:
-- Students hanya bisa akses kursus yang di-enroll
-- Instructors hanya bisa edit kursus sendiri
-- Admin punya akses penuh
-- Public bisa lihat kursus published
+### Backend (Supabase)
+- **Database**: PostgreSQL
+- **Auth**: Supabase Auth
+- **Storage**: Supabase Storage
+- **Realtime**: Supabase Realtime
+- **Security**: Row Level Security (RLS)
 
-## 🔄 Real-time Features
+## 📊 Progress
 
-Menggunakan Supabase Realtime untuk:
-- Live notifications
-- Progress updates
-- Quiz results
-- Announcements
-- Discussion updates
+| Feature | Status |
+|---------|--------|
+| Design System | ✅ Complete |
+| Authentication | ✅ Complete |
+| Landing Page | ✅ Complete |
+| Course Listing | ✅ Complete |
+| Student Dashboard | ✅ Complete |
+| Instructor Dashboard | ✅ Basic |
+| Course Detail | 🚧 In Progress |
+| Lesson Player | ⏳ Planned |
+| Quiz System | ⏳ Planned |
+| Certificates | ⏳ Planned |
+| Live Class | ⏳ Planned |
+| Admin Panel | ⏳ Planned |
 
-```javascript
-// Subscribe to notifications
-supabase
-  .channel('notifications')
-  .on('postgres_changes', {
-    event: 'INSERT',
-    schema: 'public',
-    table: 'notifications',
-    filter: `user_id=eq.${userId}`
-  }, (payload) => {
-    console.log('New notification!', payload)
-  })
-  .subscribe()
-```
+📖 **Detail:** [UI_IMPLEMENTATION_SUMMARY.md](./UI_IMPLEMENTATION_SUMMARY.md)
 
-## 📦 Deployment
+## 📚 Documentation
 
-### Deploy ke Vercel (Recommended)
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel --prod
-```
-
-### Environment Variables di Vercel
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
-```
-
-## 💰 Cost Estimation
-
-### Free Tier (Perfect untuk Development & Small Scale)
-- Supabase: $0 (500MB DB, 1GB storage, 2GB bandwidth)
-- Vercel: $0 (hobby plan)
-- **Total: $0/month** 🎉
-
-### Production (Medium Scale - 1000 students)
-- Supabase Pro: $25/mo (8GB DB, 100GB storage, 250GB bandwidth)
-- Vercel Pro: $20/mo
-- Cloudflare Stream: ~$5/mo (pay per use)
-- **Total: ~$50/month**
-
-### Comparison dengan Arsitektur Lama:
-- **50% lebih murah** 💰
-- **75% lebih sedikit services** 🎯
-- **100% lebih simple** ✨
-
-## 📖 Documentation
-
-- 📘 [Quick Start (5 min)](./frontend/QUICKSTART.md) - Get running in 5 minutes
-- ✅ [Ready to Run Checklist](./READY_TO_RUN.md) - What's built & what's next
-- 🔧 [Setup Guide](./SETUP.md) - Detailed installation
-- 🔄 [Migration Guide](./MIGRATION_TO_SUPABASE.md) - Architecture explanation
-- 🚀 [Deployment Guide](./DEPLOYMENT.md) - Deploy to production
-- 📝 [Contributing Guide](./CONTRIBUTING.md) - How to contribute
-- ✅ [TODO List](./TODO.md) - Roadmap & progress
+- [Quick Start Guide](./QUICK_START_UI.md) - Cara running project
+- [UI Implementation Summary](./UI_IMPLEMENTATION_SUMMARY.md) - Summary implementasi
+- [Implementation Blueprint](./IMPLEMENTATION_BLUEPRINT.md) - Detail teknis
+- [Architecture](./MIGRATION_TO_SUPABASE.md) - Penjelasan arsitektur
+- [Contributing](./CONTRIBUTING.md) - Panduan kontribusi
+- [Changelog](./CHANGELOG.md) - Riwayat perubahan
+- [TODO](./TODO.md) - Task tracking
 
 ## 🤝 Contributing
 
-Kontribusi sangat diterima! Lihat [CONTRIBUTING.md](./CONTRIBUTING.md) untuk guidelines.
+Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) first.
 
 ## 📝 License
 
-Project ini dilisensikan di bawah MIT License - lihat [LICENSE](./LICENSE) untuk detail.
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 🎯 Roadmap
 
-- [Next.js](https://nextjs.org/) - React Framework
-- [Supabase](https://supabase.com/) - Backend as a Service
-- [Tailwind CSS](https://tailwindcss.com/) - CSS Framework
-- [shadcn/ui](https://ui.shadcn.com/) - UI Components
-- [LiveKit](https://livekit.io/) - Video Infrastructure
+### Phase 1: Core Features (Current)
+- [x] Design system implementation
+- [x] Authentication & authorization
+- [x] Landing & course listing
+- [ ] Course detail & enrollment
+- [ ] Lesson player
 
-## 📧 Support
+### Phase 2: Assessment
+- [ ] Quiz creation (instructor)
+- [ ] Quiz taking (student)
+- [ ] Auto-grading
+- [ ] Results & analytics
 
-- 🐛 [Report Bug](https://github.com/yourusername/lms-kampus/issues)
-- 💡 [Request Feature](https://github.com/yourusername/lms-kampus/issues)
+### Phase 3: Advanced
+- [ ] Certificate generation
+- [ ] Live class integration
+- [ ] Real-time notifications
+- [ ] Discussion forum
+
+### Phase 4: Polish
+- [ ] Admin panel
+- [ ] Email notifications
+- [ ] Mobile optimization
+- [ ] Performance tuning
+
+## 💡 Tips
+
+1. **Baca [QUICK_START_UI.md](./QUICK_START_UI.md) dulu** - Panduan lengkap setup
+2. **Test dark mode** - Toggle di navbar untuk lihat dark mode
+3. **Responsive design** - Resize browser untuk test mobile view
+4. **Design tokens** - Gunakan design tokens dari `globals.css`, jangan hardcode colors
+
+## 🐛 Troubleshooting
+
+**Error: "Invalid API key"**
+- Check `.env.local` file
+- Restart dev server
+
+**Error: "relation does not exist"**
+- Run `supabase db push` again
+
+**Build errors on other pages**
+- Normal, halaman lain belum update ke design system baru
+
+📖 **More:** [QUICK_START_UI.md](./QUICK_START_UI.md#troubleshooting)
 
 ---
 
-<div align="center">
-
-**Made with ❤️ for Indonesian Education**
-
-Powered by Supabase 🚀
-
-[⬆ Back to Top](#lms-kampus---learning-management-system)
-
-</div>
+**Status**: ✅ Foundation Complete, Ready for Development  
+**Last Updated**: 19 Maret 2026  
+**Version**: 2.0.0 (Supabase Edition)

@@ -1,22 +1,33 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-function Badge({ className, variant = "default", ...props }) {
+const badgeVariants = {
+  success: "bg-[#DCFCE7] text-[#15803D]",
+  warning: "bg-[#FEF3C7] text-[#92400E]",
+  danger: "bg-[#FEE2E2] text-[#B91C1C]",
+  info: "bg-[#DBEAFE] text-[#1D4ED8]",
+  brand: "bg-[#E8F7EE] text-[#0F7A3D]",
+  accent: "bg-[#EEF2FF] text-[#4338CA]",
+  neutral: "bg-surface-2 text-ink-600",
+}
+
+const Badge = React.forwardRef(({ 
+  className, 
+  variant = "neutral",
+  ...props 
+}, ref) => {
   return (
-    <div
+    <span
+      ref={ref}
       className={cn(
-        "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-        {
-          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80": variant === "default",
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80": variant === "secondary",
-          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80": variant === "destructive",
-          "text-foreground": variant === "outline",
-        },
+        "inline-flex items-center rounded px-2 py-1 text-xs font-medium",
+        badgeVariants[variant],
         className
       )}
       {...props}
     />
   )
-}
+})
+Badge.displayName = "Badge"
 
 export { Badge }

@@ -5,27 +5,31 @@ import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
+import { useTheme } from 'next-themes'
 import { 
-  BookOpen, 
   Menu, 
   X, 
   User, 
   LogOut, 
   Settings,
   Bell,
-  Search
+  Moon,
+  Sun
 } from 'lucide-react'
 
 export function Navbar() {
   const router = useRouter()
   const pathname = usePathname()
   const supabase = createClient()
+  const { theme, setTheme } = useTheme()
   const [user, setUser] = useState(null)
   const [profile, setProfile] = useState(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     getUser()
   }, [])
 
@@ -53,24 +57,21 @@ export function Navbar() {
   if (isAuthPage) return null
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="sticky top-0 z-10 bg-surface-0 border-b border-border shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <BookOpen className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <span className="hidden font-bold sm:inline-block text-xl">
+          <Link href="/" className="flex items-center">
+            <span className="text-xl font-serif text-brand-500 font-normal">
               LMS Kampus
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-6">
+          <div className="hidden md:flex items-center gap-6">
             <Link 
               href="/courses" 
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-sm text-ink-400 hover:text-ink-900 transition-colors"
             >
               Kursus
             </Link>
@@ -78,14 +79,14 @@ export function Navbar() {
               <>
                 <Link 
                   href="/my-courses" 
-                  className="text-sm font-medium transition-colors hover:text-primary"
+                  className="text-sm text-ink-400 hover:text-ink-900 transition-colors"
                 >
                   Kursus Saya
                 </Link>
                 {profile?.role === 'instructor' && (
                   <Link 
                     href="/instructor" 
-                    className="text-sm font-medium transition-colors hover:text-primary"
+                    className="text-sm text-ink-400 hover:text-ink-900 transition-colors"
                   >
                     Dashboard Dosen
                   </Link>
@@ -93,7 +94,7 @@ export function Navbar() {
                 {profile?.role === 'admin' && (
                   <Link 
                     href="/admin" 
-                    className="text-sm font-medium transition-colors hover:text-primary"
+                    className="text-sm text-ink-400 hover:text-ink-900 transition-colors"
                   >
                     Admin
                   </Link>
@@ -102,64 +103,78 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Right Side */}
-          <div className="flex items-center space-x-4">
-            {/* Search */}
-            <Button variant="ghost" size="icon" className="hidden md:flex">
-              <Search className="h-5 w-5" />
-            </Button>
+          {/* Right Actions */}
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="p-2 rounded-lg hover:bg-surface-2 transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-5 h-5 text-ink-600" />
+                ) : (
+                  <Moon className="w-5 h-5 text-ink-600" />
+                )}
+              </button>
+            )}
 
             {user ? (
               <>
-                {/* Notifications */}
-                <Button variant="ghost" size="icon" className="relative">
-                  <Bell className="h-5 w-5" />
-                  <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500" />
-                </Button>
+                {/* Notification Bell */}
+                <button className="relative p-2 rounded-lg hover:bg-surface-2 transition-colors">
+                  <Bell className="w-5 h-5 text-ink-600" />
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-danger-500 rounded-full" />
+                </button>
 
                 {/* User Menu */}
                 <div className="relative">
-                  <Button
-                    variant="ghost"
-                    size="icon"
+                  <button
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="rounded-full"
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-accent-500 text-white text-sm font-medium hover:bg-accent-500/90 transition-colors"
                   >
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                      {profile?.full_name?.[0]?.toUpperCase() || 'U'}
-                    </div>
-                  </Button>
+                    {profile?.full_name?.[0]?.toUpperCase() || 'U'}
+                  </button>
 
                   {userMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-56 rounded-md border bg-background shadow-lg">
-                      <div className="p-3 border-b">
-                        <p className="font-medium">{profile?.full_name}</p>
-                        <p className="text-sm text-muted-foreground">{user.email}</p>
+                    <>
+                      <div 
+                        className="fixed inset-0 z-10" 
+                        onClick={() => setUserMenuOpen(false)}
+                      />
+                      <div className="absolute right-0 mt-2 w-56 rounded-xl border border-border bg-surface-0 shadow-lg z-20">
+                        <div className="p-3 border-b border-border">
+                          <p className="font-medium text-ink-900">{profile?.full_name}</p>
+                          <p className="text-sm text-ink-600">{user.email}</p>
+                        </div>
+                        <div className="p-2">
+                          <Link
+                            href="/profile"
+                            className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-ink-900 hover:bg-surface-2 transition-colors"
+                            onClick={() => setUserMenuOpen(false)}
+                          >
+                            <User className="h-4 w-4" />
+                            Profil
+                          </Link>
+                          <Link
+                            href="/settings"
+                            className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-ink-900 hover:bg-surface-2 transition-colors"
+                            onClick={() => setUserMenuOpen(false)}
+                          >
+                            <Settings className="h-4 w-4" />
+                            Pengaturan
+                          </Link>
+                          <button
+                            onClick={handleLogout}
+                            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-danger-500 hover:bg-surface-2 transition-colors"
+                          >
+                            <LogOut className="h-4 w-4" />
+                            Logout
+                          </button>
+                        </div>
                       </div>
-                      <div className="p-2">
-                        <Link
-                          href="/profile"
-                          className="flex items-center gap-2 rounded-sm px-3 py-2 text-sm hover:bg-accent"
-                        >
-                          <User className="h-4 w-4" />
-                          Profil
-                        </Link>
-                        <Link
-                          href="/settings"
-                          className="flex items-center gap-2 rounded-sm px-3 py-2 text-sm hover:bg-accent"
-                        >
-                          <Settings className="h-4 w-4" />
-                          Pengaturan
-                        </Link>
-                        <button
-                          onClick={handleLogout}
-                          className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-sm hover:bg-accent text-destructive"
-                        >
-                          <LogOut className="h-4 w-4" />
-                          Logout
-                        </button>
-                      </div>
-                    </div>
+                    </>
                   )}
                 </div>
               </>
@@ -168,34 +183,33 @@ export function Navbar() {
                 <Button variant="ghost" asChild>
                   <Link href="/login">Login</Link>
                 </Button>
-                <Button asChild>
+                <Button variant="primary" asChild>
                   <Link href="/register">Daftar</Link>
                 </Button>
               </div>
             )}
 
             {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
+            <button
+              className="md:hidden p-2 rounded-lg hover:bg-surface-2 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
-                <X className="h-6 w-6" />
+                <X className="w-5 h-5 text-ink-600" />
               ) : (
-                <Menu className="h-6 w-6" />
+                <Menu className="w-5 h-5 text-ink-600" />
               )}
-            </Button>
+            </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t py-4 space-y-2">
+          <div className="md:hidden border-t border-border py-4 space-y-2">
             <Link
               href="/courses"
-              className="block px-3 py-2 rounded-md hover:bg-accent"
+              className="block px-3 py-2 rounded-lg text-ink-900 hover:bg-surface-2 transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
             >
               Kursus
             </Link>
@@ -203,27 +217,30 @@ export function Navbar() {
               <>
                 <Link
                   href="/my-courses"
-                  className="block px-3 py-2 rounded-md hover:bg-accent"
+                  className="block px-3 py-2 rounded-lg text-ink-900 hover:bg-surface-2 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   Kursus Saya
                 </Link>
                 {profile?.role === 'instructor' && (
                   <Link
                     href="/instructor"
-                    className="block px-3 py-2 rounded-md hover:bg-accent"
+                    className="block px-3 py-2 rounded-lg text-ink-900 hover:bg-surface-2 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     Dashboard Dosen
                   </Link>
                 )}
                 <Link
                   href="/profile"
-                  className="block px-3 py-2 rounded-md hover:bg-accent"
+                  className="block px-3 py-2 rounded-lg text-ink-900 hover:bg-surface-2 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   Profil
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="block w-full text-left px-3 py-2 rounded-md hover:bg-accent text-destructive"
+                  className="block w-full text-left px-3 py-2 rounded-lg text-danger-500 hover:bg-surface-2 transition-colors"
                 >
                   Logout
                 </button>
@@ -232,13 +249,15 @@ export function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="block px-3 py-2 rounded-md hover:bg-accent"
+                  className="block px-3 py-2 rounded-lg text-ink-900 hover:bg-surface-2 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="block px-3 py-2 rounded-md hover:bg-accent"
+                  className="block px-3 py-2 rounded-lg text-ink-900 hover:bg-surface-2 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   Daftar
                 </Link>
