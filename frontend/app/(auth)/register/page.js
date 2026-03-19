@@ -3,10 +3,15 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import api from '@/lib/api'
+import { createClient } from '@/lib/supabase/client'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { BookOpen } from 'lucide-react'
 
 export default function RegisterPage() {
   const router = useRouter()
+  const supabase = createClient()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -23,37 +28,54 @@ export default function RegisterPage() {
     setLoading(true)
 
     try {
-      const response = await api.post('/auth/register', formData)
-      const { accessToken, refreshToken, user } = response.data
+      // Sign up with Supabase Auth
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            full_name: formData.fullName,
+            role: formData.role,
+            nim_nip: formData.nimNip,
+          },
+        },
+      })
 
-      localStorage.setItem('accessToken', accessToken)
-      localStorage.setItem('refreshToken', refreshToken)
-      localStorage.setItem('user', JSON.stringify(user))
+      if (error) throw error
 
       // Redirect based on role
-      if (user.role === 'instructor') {
+      if (formData.role === 'instructor') {
         router.push('/instructor')
       } else {
         router.push('/student')
       }
+      
+      router.refresh()
     } catch (err) {
-      setError(err.response?.data?.error || 'Registration failed')
+      setError(err.message || 'Registration failed')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted px-4 py-8">
-      <div className="w-full max-w-md">
-        <div className="bg-background rounded-lg shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-center mb-2">Daftar</h1>
-          <p className="text-center text-muted-foreground mb-6">
-            Buat akun LMS Kampus baru
+    <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4 py-8">
+      <Card className="w-full max-w-md">
+        <CardHeader className="text-center">
+          <div className="flex justify-center mb-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary">
+              <BookOpen className="h-6 w-6 text-primary-foreground" />
+            </div>
+          </div>
+          <CardTitle className="text-2xl">Buat Akun Baru</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Bergabung dengan LMS Kampus
           </p>
+        </CardHeader>
 
+        <CardContent>
           {error && (
-            <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-md mb-4">
+            <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-md mb-4 text-sm">
               {error}
             </div>
           )}
@@ -61,10 +83,9 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2">Nama Lengkap</label>
-              <input
+              <Input
                 type="text"
                 required
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                 placeholder="John Doe"
@@ -73,10 +94,9 @@ export default function RegisterPage() {
 
             <div>
               <label className="block text-sm font-medium mb-2">Email</label>
-              <input
+              <Input
                 type="email"
                 required
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="email@example.com"
@@ -85,23 +105,19 @@ export default function RegisterPage() {
 
             <div>
               <label className="block text-sm font-medium mb-2">Password</label>
-              <input
+              <Input
                 type="password"
                 required
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                placeholder="Min 8 karakter"
+                placeholder="Min 6 karakter"
               />
-              <p className="text-xs text-muted-foreground mt-1">
-                Harus mengandung huruf besar, kecil, dan angka
-              </p>
             </div>
 
             <div>
               <label className="block text-sm font-medium mb-2">Role</label>
               <select
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
               >
@@ -112,40 +128,33 @@ export default function RegisterPage() {
 
             <div>
               <label className="block text-sm font-medium mb-2">
-                {formData.role === 'student' ? 'NIM' : 'NIP'}
+                {formData.role === 'student' ? 'NIM' : 'NIP'} (Opsional)
               </label>
-              <input
+              <Input
                 type="text"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 value={formData.nimNip}
                 onChange={(e) => setFormData({ ...formData, nimNip: e.target.value })}
                 placeholder={formData.role === 'student' ? 'NIM' : 'NIP'}
               />
             </div>
 
-            <button
+            <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary/90 disabled:opacity-50 font-medium"
+              className="w-full"
             >
               {loading ? 'Loading...' : 'Daftar'}
-            </button>
+            </Button>
           </form>
 
           <p className="text-center text-sm text-muted-foreground mt-6">
             Sudah punya akun?{' '}
-            <Link href="/login" className="text-primary hover:underline">
+            <Link href="/login" className="text-primary hover:underline font-medium">
               Login di sini
             </Link>
           </p>
-        </div>
-
-        <div className="text-center mt-4">
-          <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-            ← Kembali ke beranda
-          </Link>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }

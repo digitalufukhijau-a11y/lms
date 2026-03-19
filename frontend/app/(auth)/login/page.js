@@ -4,6 +4,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { BookOpen } from 'lucide-react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -53,16 +57,23 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted px-4">
-      <div className="w-full max-w-md">
-        <div className="bg-background rounded-lg shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-center mb-2">Login</h1>
-          <p className="text-center text-muted-foreground mb-6">
-            Masuk ke akun LMS Kampus Anda
+    <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
+      <Card className="w-full max-w-md">
+        <CardHeader className="text-center">
+          <div className="flex justify-center mb-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary">
+              <BookOpen className="h-6 w-6 text-primary-foreground" />
+            </div>
+          </div>
+          <CardTitle className="text-2xl">Selamat Datang Kembali</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Login ke akun LMS Kampus Anda
           </p>
+        </CardHeader>
 
+        <CardContent>
           {error && (
-            <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-md mb-4">
+            <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-md mb-4 text-sm">
               {error}
             </div>
           )}
@@ -70,10 +81,9 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2">Email</label>
-              <input
+              <Input
                 type="email"
                 required
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="email@example.com"
@@ -82,39 +92,32 @@ export default function LoginPage() {
 
             <div>
               <label className="block text-sm font-medium mb-2">Password</label>
-              <input
+              <Input
                 type="password"
                 required
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 placeholder="••••••••"
               />
             </div>
 
-            <button
+            <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary/90 disabled:opacity-50 font-medium"
+              className="w-full"
             >
               {loading ? 'Loading...' : 'Login'}
-            </button>
+            </Button>
           </form>
 
           <p className="text-center text-sm text-muted-foreground mt-6">
             Belum punya akun?{' '}
-            <Link href="/register" className="text-primary hover:underline">
+            <Link href="/register" className="text-primary hover:underline font-medium">
               Daftar di sini
             </Link>
           </p>
-        </div>
-
-        <div className="text-center mt-4">
-          <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-            ← Kembali ke beranda
-          </Link>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }

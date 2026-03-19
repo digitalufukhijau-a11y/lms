@@ -64,31 +64,33 @@ Optional:
 - Node.js 18+
 - Supabase account (gratis di [supabase.com](https://supabase.com))
 
-### Installation
+### 5-Minute Setup
 
 ```bash
-# 1. Clone repository
+# 1. Clone & install
 git clone https://github.com/yourusername/lms-kampus.git
 cd lms-kampus/frontend
-
-# 2. Install dependencies
 npm install
 
-# 3. Setup environment
+# 2. Setup environment
 cp .env.example .env.local
 # Edit .env.local dengan Supabase credentials
 
-# 4. Setup Supabase
+# 3. Setup database
 npm install -g supabase
 supabase login
-supabase link --project-ref your-project-ref
+supabase link --project-ref your-ref-id
+cd ..
 supabase db push
 
-# 5. Start development
+# 4. Run!
+cd frontend
 npm run dev
 ```
 
 Buka http://localhost:3000
+
+📖 **Detailed Guide:** [QUICKSTART.md](./frontend/QUICKSTART.md) | [READY_TO_RUN.md](./READY_TO_RUN.md)
 
 ## 📁 Project Structure
 
@@ -212,10 +214,12 @@ NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
 
 ## 📖 Documentation
 
-- 📘 [Setup Guide](./SETUP.md) - Panduan instalasi lengkap
-- 🔄 [Migration Guide](./MIGRATION_TO_SUPABASE.md) - Penjelasan arsitektur baru
-- 🚀 [Deployment Guide](./DEPLOYMENT.md) - Deploy ke production
-- 📝 [Contributing Guide](./CONTRIBUTING.md) - Cara berkontribusi
+- 📘 [Quick Start (5 min)](./frontend/QUICKSTART.md) - Get running in 5 minutes
+- ✅ [Ready to Run Checklist](./READY_TO_RUN.md) - What's built & what's next
+- 🔧 [Setup Guide](./SETUP.md) - Detailed installation
+- 🔄 [Migration Guide](./MIGRATION_TO_SUPABASE.md) - Architecture explanation
+- 🚀 [Deployment Guide](./DEPLOYMENT.md) - Deploy to production
+- 📝 [Contributing Guide](./CONTRIBUTING.md) - How to contribute
 - ✅ [TODO List](./TODO.md) - Roadmap & progress
 
 ## 🤝 Contributing
