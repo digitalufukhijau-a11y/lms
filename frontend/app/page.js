@@ -28,11 +28,17 @@ export default function HomePage() {
             
             <div className="flex items-center justify-center gap-4 pt-4">
               <Button variant="primary" size="lg" asChild>
-                <Link href="/register">Daftar Gratis</Link>
+                <Link href="/demo">🎨 Demo Mode (Test Semua Pages)</Link>
               </Button>
               <Button variant="ghost" size="lg" asChild>
-                <Link href="/courses">Jelajahi Kursus</Link>
+                <Link href="/register">Daftar Gratis</Link>
               </Button>
+            </div>
+            
+            <div className="mt-4">
+              <p className="text-sm text-ink-500">
+                💡 Klik "Demo Mode" untuk test semua halaman tanpa login!
+              </p>
             </div>
           </div>
         </div>

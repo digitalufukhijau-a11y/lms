@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = {
@@ -20,13 +21,16 @@ const Button = React.forwardRef(({
   className, 
   variant = "primary", 
   size = "default",
+  asChild = false,
   disabled,
   loading,
   children,
   ...props 
 }, ref) => {
+  const Comp = asChild ? Slot : "button"
+  
   return (
-    <button
+    <Comp
       className={cn(
         "inline-flex items-center justify-center font-medium transition-colors",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2",
@@ -51,7 +55,7 @@ const Button = React.forwardRef(({
         </svg>
       )}
       {children}
-    </button>
+    </Comp>
   )
 })
 Button.displayName = "Button"
