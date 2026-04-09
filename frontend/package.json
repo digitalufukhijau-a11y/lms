@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "type-check": "tsc --noEmit",
     "db:types": "supabase gen types typescript --local > lib/database.types.ts"
   },
   "dependencies": {
@@ -29,11 +30,11 @@
     "framer-motion": "^11.0.3",
     "jspdf": "^2.5.1",
     "lucide-react": "^0.323.0",
-    "next": "^14.1.0",
+    "next": "^15.1.0",
     "next-themes": "^0.2.1",
     "postcss": "^8.4.35",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-hook-form": "^7.50.0",
     "react-player": "^2.14.1",
     "resend": "^3.2.0",
@@ -45,10 +46,10 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.16",
-    "@types/react": "^18.2.52",
-    "@types/react-dom": "^18.2.18",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "eslint": "^8.56.0",
-    "eslint-config-next": "^14.1.0",
+    "eslint-config-next": "^15.1.0",
     "supabase": "^1.142.2",
     "typescript": "^5.3.3"
   }
